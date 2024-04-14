@@ -26,7 +26,32 @@ def generate_random(number1,number2):
 
 
 
+generate_random(number1,number2)
 
+while toContinue==True:
+    ans = input("WHO HAS MORE FOLLOWERS-A OR B:")
+
+    fol1=data[number1]["follower_count"]
+    fol2=data[number2]["follower_count"]
+
+    if ans=='A':
+        ans=fol1-fol2
+    else:
+        ans=fol2-fol1
+
+
+
+    if ans>0:
+        number1=number2
+        number2=random.randint(0,50)
+        generate_random(number1,number2)
+        score+=1
+        print(f"YOUR SCORE IS {score}")
+        
+    else:
+        clear()
+        print(f"YOU LOST. YOUR SCORE IS {score}")
+        toContinue=False
 
 
 
