@@ -1,85 +1,68 @@
 from game_data import data
-import art
+from art import logo,vs
 from replit import clear
 import random
 
+print(logo)
+score=0
 
-def generate_random(number1,number2):
+def generate_random(person):
 
    
 
-    name1=data[number1]['name']
-    desc1=data[number1]['description']
-    con1=data[number1]['country']
+    name=person['name']
+    desc=person['description']
+    con=person['country']
 
-    name2=data[number2]['name']
-    desc2=data[number2]['description']
-    con2=data[number2]['country']
+    
 
-    print(f"Compare A:{name1}, {desc1}, from{con1}\n")
+    return(f"{name}, {desc}, from {con}\n")
 
-    print(f"Compare B:{name2}, {desc2}, from { con2}\n")
 
-score=0
+def checkAnswer(guess,follA_count,follB_count):
+    if follA_count>follB_count:
+        return guess == 'a'
+    else:
+        return guess == 'b'
+
+
+personB=random.choice(data)
+
 run_again=True
 
 
 
 while run_again:
+    personA=personB
+
+    personB=random.choice(data)
+
+    while(personA==personB):
+        personB=random.choice(data)
+
+    print(f"Compare A: {generate_random(personA)}")
+    print(vs)
+    print( f"Against B:{generate_random(personB)}")
+
+    ans = input("WHO HAS MORE FOLLOWERS-A OR B:").lower()
+
+    folA=personA["follower_count"]
+    folB=personB["follower_count"]
+
+    clear()
+    print(logo)
+
+    is_correct = checkAnswer(ans,folA,folB)
+
+    if(is_correct):
+        score+=1
+        print(f"You're correct! Current score: {score}")
+    else:
+        run_again=False
+        print(f"You lost. Your final score: {score}")
+
+
     
-
-    number1=random.randint(0,49)
-
-    number2=random.randint(0,49)
-    print(f"SCORE = {score}")
-    generate_random(number1,number2)
-
-    toContinue=True
-
-    while toContinue==True:
-        ans = input("WHO HAS MORE FOLLOWERS-A OR B:")
-
-        fol1=data[number1]["follower_count"]
-        fol2=data[number2]["follower_count"]
-
-        if ans=='A':
-            ans=fol1-fol2
-        else:
-            ans=fol2-fol1
-
-        
-        clear()
-        # print(f"SCORE = {score}")
-
-
-        if ans>0:
-            number1=number2
-            number2=random.randint(0,49)
-            
-            
-            score+=1
-            print(f"SCORE = {score}")
-            generate_random(number1,number2)
-            
-        
-            
-        else:
-            # clear()
-            print(f"YOU LOST. YOUR SCORE IS {score}")
-        
-            play_again=input("Do You wish to continue:(Y OR N):")
-            clear()
-            toContinue=False
-            if(play_again=='N'):
-                run_again=False
-                
-                
-
-
-
-
-
-
-
-
-
+    
+   
+    
